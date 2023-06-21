@@ -15,13 +15,11 @@ public class DashboardPage {
     private ElementsCollection cards = $$(".list__item div");
     private final String balanceStart = ", баланс: ";
     private final String balanceFinish = " р. ";
-
     public DashboardPage() {
 
         heading.shouldBe(visible);
     }
-
-    public int getCardBalance(DataHelper.CardInfo cardInfo) {
+    public int getCardBalance(DataHelper.CardInfo cardInfo){
         var text = cards.findBy(Condition.text(cardInfo.getCardNumber().substring(15))).getText();
         return extractBalance(text);
     }
@@ -33,11 +31,11 @@ public class DashboardPage {
         var value = text.substring(start + balanceStart.length(), finish);
         return Integer.parseInt(value);
     }
-
-    public TransferPage selectCardToTransfer(DataHelper.CardInfo cardInfo) {
+    public TransferPage selectCardToTransfer(DataHelper.CardInfo cardInfo){
         cards.findBy(attribute(cardInfo.getCardID())).$("button").click();
         return new TransferPage();
     }
+
 
 
 }
