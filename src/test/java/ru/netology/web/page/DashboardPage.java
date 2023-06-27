@@ -1,12 +1,10 @@
 package ru.netology.web.page;
 
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import ru.netology.web.data.DataHelper;
 
-import static com.codeborne.selenide.Condition.attribute;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
@@ -16,11 +14,16 @@ public class DashboardPage {
     private final String balanceStart = ", баланс: ";
     private final String balanceFinish = " р. ";
     public DashboardPage() {
-
         heading.shouldBe(visible);
     }
+
     public int getCardBalance(DataHelper.CardInfo cardInfo){
-        var text = cards.findBy(Condition.text(cardInfo.getCardNumber().substring(15))).getText();
+        var text = cards.findBy(text(cardInfo.getCardNumber().substring(15))).getText();
+        return extractBalance(text);
+    }
+
+    public int getCardBalance(int index) {
+        var text = cards.get(index).getText();
         return extractBalance(text);
     }
 
@@ -32,7 +35,7 @@ public class DashboardPage {
         return Integer.parseInt(value);
     }
     public TransferPage selectCardToTransfer(DataHelper.CardInfo cardInfo){
-        cards.findBy(attribute(cardInfo.getCardID())).$("button").click();
+        cards.findBy(attribute(cardInfo.getTestID())).$("button").click();
         return new TransferPage();
     }
 

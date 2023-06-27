@@ -6,32 +6,33 @@ import ru.netology.web.data.DataHelper;
 
 import java.time.Duration;
 
+import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 
 public class TransferPage {
-    private SelenideElement amount = $("[data-test-id='action-deposit'] input");
-    private SelenideElement fromAmount = $("[data-test-id='from'] input");
+    private SelenideElement amountInputNew = $("[data-test-id='amount'] input");
+    private SelenideElement fromInput = $("[data-test-id='from'] input");
     private SelenideElement transferHead = $(byText("Пополнение карты"));
 
-    private SelenideElement amountButton = $("[data-test-id='action-transfer']");
-    private SelenideElement errorMessage = $("[data-test-id='error-notification']");
+    private SelenideElement transferButton = $("[data-test-id='action-transfer']");
+    private SelenideElement errorMessage = $("[data-test-id='error-message']");
     public TransferPage(){
         transferHead.shouldBe(Condition.visible);
     }
-    public void makeTransfer (String transferAmount, DataHelper.CardInfo cardInfo){
-        amount.setValue(transferAmount);
-        fromAmount.setValue(cardInfo.getCardNumber());
-        amountButton.click();
+    public void makeTransfer (String amountToTransfer, DataHelper.CardInfo cardInfo){
+        amountInputNew.setValue(amountToTransfer);
+        fromInput.setValue(cardInfo.getCardNumber());
+        transferButton.click();
 
     }
-    public DashboardPage makeValidAmount(String transferAmount, DataHelper.CardInfo cardInfo) {
-        makeTransfer(transferAmount, cardInfo);
+    public DashboardPage makeValidTransfer(String amountToTransfer, DataHelper.CardInfo cardInfo) {
+        makeTransfer(amountToTransfer, cardInfo);
         return new DashboardPage();
     }
 
-    public void ErrorMessageFind(String expectedText){
-        errorMessage.shouldHave(Condition.exactText(expectedText), Duration.ofSeconds(10)).shouldBe(Condition.visible);
+    public void findErrorMessage(String expectedText){
+        errorMessage.shouldHave(exactText(expectedText), Duration.ofSeconds(15)).shouldBe(Condition.visible);
 
     }
 }
