@@ -15,6 +15,6 @@ public class LoginPage {
         loginField.setValue(info.getLogin());
         passwordField.setValue(info.getPassword());
         loginButton.click();
-        return page (VerificationPage.class);
+        return page(VerificationPage.class);
     }
 }
