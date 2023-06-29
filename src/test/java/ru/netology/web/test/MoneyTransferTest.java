@@ -42,7 +42,7 @@ class MoneyTransferTest {
     }
 
     @Test
-    void shouldGetErrorMessageAmountMoreBalance() {
+    void shouldGetErrorMessageIfAmountMoreBalance() {
         var firstCardInfo = getFirstCardInfo();
         var secondCardInfo = getSecondCardInfo();
         var firstCardBalance = dashboardPage.getCardBalance(firstCardInfo);
@@ -54,7 +54,7 @@ class MoneyTransferTest {
         var actualBalanceFirstCard = dashboardPage.getCardBalance(firstCardInfo);
         var actualBalanceSecondCard = dashboardPage.getCardBalance(secondCardInfo);
         assertEquals(firstCardBalance, actualBalanceFirstCard);
-        assertEquals(secondCardBalance, actualBalanceFirstCard);
+        assertEquals(secondCardBalance, actualBalanceSecondCard);
 
     }
 }
